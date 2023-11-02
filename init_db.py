@@ -11,34 +11,25 @@ conn = psycopg2.connect(
 cur = conn.cursor()
 
 # Execute a command: this creates a new table
-cur.execute('DROP TABLE IF EXISTS client;')
-cur.execute('CREATE TABLE client (id serial PRIMARY KEY,'
-            'secret varchar (150) NOT NULL,'
-            'name varchar (50) NOT NULL,'
-            'scopes integer NOT NULL,'
-            'review text,'
+cur.execute('DROP TABLE IF EXISTS clients;')
+cur.execute('CREATE TABLE clients (id varchar PRIMARY KEY,'
+            'secret varchar (255) NOT NULL,'
+            'name varchar (255) NOT NULL,'
+            'scopes VARCHAR[] NOT NULL,'       
             'inserted_at date DEFAULT CURRENT_TIMESTAMP);',
             'updated_at date DEFAULT CURRENT_TIMESTAMP);'
             )
 
 # Insert data into the table
-
-cur.execute('INSERT INTO books (title, author, pages_num, review)'
+cur.execute('INSERT INTO clients (id, name, secret, scopes)'
             'VALUES (%s, %s, %s, %s)',
-            ('A Tale of Two Cities',
-             'Charles Dickens',
-             489,
-             'A great classic!')
-            )
+            ('client_id',
+             'client_name',
+             'client_secret',
+             '{"Joe", "Root"}'
+            ))
 
 
-cur.execute('INSERT INTO books (title, author, pages_num, review)'
-            'VALUES (%s, %s, %s, %s)',
-            ('Anna Karenina',
-             'Leo Tolstoy',
-             864,
-             'Another great classic!')
-            )
 
 conn.commit()
 
