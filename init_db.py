@@ -20,6 +20,16 @@ cur.execute('CREATE TABLE clients (id varchar PRIMARY KEY,'
             'updated_at date DEFAULT CURRENT_TIMESTAMP);'
             )
 
+
+cur.execute('DROP TABLE IF EXISTS users;')
+cur.execute('CREATE TABLE user (id varchar PRIMARY KEY,'
+            'secret varchar (255) NOT NULL,'
+            'name varchar (255) NOT NULL,'
+            'scopes VARCHAR[] NOT NULL,'       
+            'inserted_at date DEFAULT CURRENT_TIMESTAMP);',
+            'updated_at date DEFAULT CURRENT_TIMESTAMP);'
+            )
+
 # Insert data into the table
 cur.execute('INSERT INTO clients (id, name, secret, scopes)'
             'VALUES (%s, %s, %s, %s)',
